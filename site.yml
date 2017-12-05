@@ -1,0 +1,10 @@
+---
+# file: site.yml
+
+- hosts: testing
+  remote_user: testuser
+  become: true
+  tasks:
+    - name: just ping
+      ping:
+...
