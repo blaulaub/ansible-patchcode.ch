@@ -7,4 +7,13 @@
   tasks:
     - name: just ping
       ping:
+
+- hosts: testing
+  remote_user: testuser
+  become: true
+  tasks:
+    - name: echo hosts
+      command: echo {{ item.host }}
+      with_items: "{{ network_mappings }}"
+
 ...
