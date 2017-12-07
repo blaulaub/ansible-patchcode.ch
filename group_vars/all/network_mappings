@@ -1,32 +1,43 @@
 ---
+#
+# file: network_mappings
+#
+# this file contains networks and hosts in that network
+#
 network_mappings:
-  - host: freenet
-    ip: 192.168.7.101
-    mac: 52:54:00:14:3c:81
-  - host: ansible-client
-    ip: 192.168.7.75
-    mac:  52:54:00:03:92:16
-  - host: mysql
-    ip: 192.168.7.103
-    mac: 52:54:00:a1:01:dc
-  - host: dovecot
-    ip: 192.168.7.105
-    mac: 52:54:00:88:d2:20
-  - host: tomcat
-    ip: 192.168.7.108
-    mac: 52:54:00:36:35:b9
-  - host: smtp
-    ip: 192.168.7.110
-    mac: 52:54:00:a4:5a:16
-  - host: wollishofen
-    ip: 192.168.7.112
-    mac: d0:50:99:a7:ad:4a
-  - host: www
-    ip: 192.168.7.116
-    mac: 52:54:00:6d:dc:bf
-  - host: influx
-    ip: 192.168.7.117
-    mac: 52:54:00:6d:dc:c0
-  - host: LoungePC
-    ip: 192.168.7.155
-    mac: 68:05:ca:12:99:89
+  localnet:
+    netmask: 192.168.7.0/24
+    gateway: 192.168.7.102
+    nameserver:
+      - 192.168.7.112
+    hosts:
+      - host: freenet
+        ip: 192.168.7.101
+        mac: 52:54:00:14:3c:81
+      - host: ansible-client
+        ip: 192.168.7.75
+        mac:  52:54:00:03:92:16
+      - host: mysql
+        ip: 192.168.7.103
+        mac: 52:54:00:a1:01:dc
+      - host: dovecot
+        ip: 192.168.7.105
+        mac: 52:54:00:88:d2:20
+      - host: tomcat
+        ip: 192.168.7.108
+        mac: 52:54:00:36:35:b9
+      - host: smtp
+        ip: 192.168.7.110
+        mac: 52:54:00:a4:5a:16
+      - host: wollishofen
+        ip: 192.168.7.112
+        mac: d0:50:99:a7:ad:4a
+      - host: www
+        ip: 192.168.7.116
+        mac: 52:54:00:6d:dc:bf
+      - host: influx
+        ip: 192.168.7.117
+        mac: 52:54:00:6d:dc:c0
+      - host: LoungePC
+        ip: 192.168.7.155
+        mac: 68:05:ca:12:99:89

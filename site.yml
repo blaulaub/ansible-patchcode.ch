@@ -14,6 +14,6 @@
   tasks:
     - name: echo hosts
       command: echo {{ item.host }}
-      with_items: "{{ network_mappings }}"
+      with_items: "{{ network_mappings['localnet'].hosts }}"
 
 ...
