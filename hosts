@@ -1,7 +1,31 @@
 
 # file: hosts
 
+[debian8]
+influx.localnet
+
+[debian9]
+dovecot.localnet
+freenet.localnet
+tomcat.localnet
+smtp.localnet
+smtp.localnet
+white-dwarf.localnet
+wollishofen.localnet
+www.localnet
+mysql.localnet
+
+[root-btrfs]
+tomcat.localnet
+dovecot.localnet
+mysql.localnet
+white-dwarf.localnet
+smtp.localnet
+wollishofen.localnet
+
 [testing]
 192.168.7.75
 
-
+[dnsmasq-dns-servers]
+white-dwarf.localnet
+wollishofen.localnet

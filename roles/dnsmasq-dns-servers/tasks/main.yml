@@ -1,0 +1,20 @@
+---
+
+- name: have dnsmasq installed
+  package:
+    name: dnsmasq
+    state: present
+- name: ensure dnsmasq dns configuration is there
+  lineinfile:
+    dest: /etc/dnsmasq.conf
+    line: "dhcp-host={{ item.mac }},{{ item.host }},{{ item.ip }},2h"
+    state: present
+  with_items: "{{ network_mappings['localnet'].hosts }}"
+  notify: restart dnsmasq
+- name: have dnsmasq running
+  service:
+    name: dnsmasq
+    enabled: yes
+    state: started
+# TODO restart service on change
+...
