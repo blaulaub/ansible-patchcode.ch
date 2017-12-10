@@ -41,3 +41,4 @@ network_mappings:
       - host: LoungePC
         ip: 192.168.7.155
         mac: 68:05:ca:12:99:89
+...

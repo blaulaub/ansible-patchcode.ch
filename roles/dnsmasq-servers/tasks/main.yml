@@ -10,6 +10,22 @@
     line: "domain-needed"
     state: present
   notify: restart dnsmasq
+- name: "dnsmasq: Never forward addresses in the non-routed address spaces."
+  lineinfile:
+    dest: "{{ dnsmasq_config_file }}"
+    line: "bogus-priv"
+    state: present
+  notify: restart dnsmasq
+- name: "dnsmasq: Interfaces"
+  lineinfile:
+    dest: "{{ dnsmasq_config_file }}"
+    line: "interface={{item.1}}"
+    state: present
+  notify: restart dnsmasq
+  when: inventory_hostname == "{{item.0.host}}"
+  with_subelements:
+    - "{{ dnsmasq_confs}} "
+    - interfaces
 - name: enlist static hosts and IPs in DHCP/DNS configuration
   lineinfile:
     dest: "{{ dnsmasq_config_file }}"

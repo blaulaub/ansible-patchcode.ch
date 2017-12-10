@@ -1,3 +1,10 @@
 ---
 dnsmasq_config_file: /etc/dnsmasq.conf
+dnsmasq_confs:
+  - host: wollishofen.localnet
+    interfaces:
+      - "br0"
+  - host: white-dwarf.localnet
+    interfaces:
+      - "br0"
 ...
