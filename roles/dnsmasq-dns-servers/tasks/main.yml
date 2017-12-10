@@ -4,9 +4,15 @@
   package:
     name: dnsmasq
     state: present
-- name: ensure dnsmasq dns configuration is there
+- name: "dnsmasq: Never forward plain names (without a dot or domain part)"
   lineinfile:
-    dest: /etc/dnsmasq.conf
+    dest: "{{ dnsmasq_config_file }}"
+    line: "domain-needed"
+    state: present
+  notify: restart dnsmasq
+- name: enlist static hosts and IPs in DHCP/DNS configuration
+  lineinfile:
+    dest: "{{ dnsmasq_config_file }}"
     line: "dhcp-host={{ item.mac }},{{ item.host }},{{ item.ip }},2h"
     state: present
   with_items: "{{ network_mappings['localnet'].hosts }}"
@@ -16,5 +22,4 @@
     name: dnsmasq
     enabled: yes
     state: started
-# TODO restart service on change
 ...
