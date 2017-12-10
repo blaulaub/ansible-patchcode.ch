@@ -1,9 +1,9 @@
 ---
 # file: site.yml
 
-- hosts: dnsmasq-dns-servers
+- hosts: dnsmasq_servers
   remote_user: ansible-agent
   become: true
   roles:
-    - dnsmasq-dns-servers
+    - dnsmasq-servers
 ...
