@@ -1,17 +1,14 @@
 
 # file: hosts
 
-[debian8]
-influx.localnet
-
 [debian9]
+white-dwarf.localnet
+wollishofen.localnet
+influx.localnet
 dovecot.localnet
 freenet.localnet
 tomcat.localnet
 smtp.localnet
-smtp.localnet
-white-dwarf.localnet
-wollishofen.localnet
 www.localnet
 mysql.localnet
 
@@ -29,3 +26,12 @@ wollishofen.localnet
 [dnsmasq_servers]
 white-dwarf.localnet
 wollishofen.localnet
+
+[headless_vms]
+influx.localnet
+dovecot.localnet
+freenet.localnet
+tomcat.localnet
+smtp.localnet
+www.localnet
+mysql.localnet

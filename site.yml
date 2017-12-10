@@ -6,4 +6,10 @@
   become: true
   roles:
     - dnsmasq-servers
+- hosts: headless_vms
+  remote_user: ansible-agent
+  become: true
+  roles:
+    - ttyS0-servers
+    - powerbutton-listeners
 ...
