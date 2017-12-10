@@ -15,6 +15,8 @@
       line: "domain-needed"
     - comment: "Never forward addresses in the non-routed address spaces."
       line: "bogus-priv"
+    - comment: "Never bind to wildcard address."
+      line: "bind-interfaces"
 - name: "dnsmasq: Interfaces"
   lineinfile:
     dest: "{{ dnsmasq_config_file }}"
