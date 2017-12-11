@@ -1,0 +1,31 @@
+---
+# file: virt-guests.yml
+#
+# status: under development
+#
+# inspired by https://github.com/sfromm/ansible-playbooks/
+
+
+- hosts: libvirt_servers
+  remote_user: ansible-agent
+  become: true
+  tasks:
+
+    - name: ensure libvirt daemon is running
+      service:
+        name: libvirtd
+        state: started
+        enabled: yes
+
+    - name: ensure libvirt is accessible to ansible
+      package: name=python-libvirt state=present
+        
+    - name: get list of vms
+      virt: command=list_vms
+      register: virt_vms
+        
+    - command: echo Hallo
+      with_items:
+        - host: wollishofen.localnet
+      when: inventory_hostname == "{{ item.host }}"
+...

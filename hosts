@@ -27,6 +27,10 @@ ansible-client
 white-dwarf.localnet
 wollishofen.localnet
 
+[libvirt_servers]
+white-dwarf.localnet
+wollishofen.localnet
+
 [headless_vms]
 influx.localnet
 dovecot.localnet
