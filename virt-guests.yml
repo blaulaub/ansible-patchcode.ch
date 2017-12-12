@@ -11,19 +11,42 @@
   become: true
   tasks:
 
+    - name: ensure libvirt and python tools are installed
+      package: name=python-libvirt state=present
+      with_items:
+        - python-libvirt
+        - python-lxml
+
     - name: ensure libvirt daemon is running
       service:
         name: libvirtd
         state: started
         enabled: yes
 
-    - name: ensure libvirt is accessible to ansible
-      package: name=python-libvirt state=present
-        
+    - name: get list of virtual networks
+      virt_net: command=facts
+      register: virt_nets
+
+    # TODO: define missing nets
+
+    # TODO: check and fix net modifications
+
+    - name: get list of image pools
+      virt_pool: command=facts
+      register: virt_pools
+
+    # TODO: define missing pools
+
+    # TODO: check and fix pool modifications
+
     - name: get list of vms
       virt: command=list_vms
       register: virt_vms
-        
+
+    # TODO: create missing VMs
+
+    # TODO: create missing volumes
+
     - command: echo Hallo
       with_items:
         - host: wollishofen.localnet
