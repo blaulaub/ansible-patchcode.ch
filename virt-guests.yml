@@ -34,7 +34,7 @@
   tasks:
 
     - name: ensure libvirt and python tools are installed
-      package: name=python-libvirt state=present
+      package: name="{{ item }}" state=present
       with_items:
         - python-libvirt
         - python-lxml
