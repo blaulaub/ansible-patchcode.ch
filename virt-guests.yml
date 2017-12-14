@@ -19,6 +19,7 @@
 
         - vm_name: ansible-client
           hostname: ansible-client
+          network: localnet
           libvirt_host: wollishofen.localnet
           ram_in_MB: 1024
           vcpus: 1
@@ -32,6 +33,7 @@
 
         - vm_name: vm-another-test
           hostname: another-test
+          network: localnet
           libvirt_host: wollishofen.localnet
           ram_in_MB: 1024
           vcpus: 1
@@ -98,26 +100,34 @@
         - volumes
       when: (inventory_hostname == item.0.libvirt_host) and (item.1.name not in virt_pool_facts.ansible_facts.ansible_libvirt_pools[item.1.pool].volumes)
 
-    - name: create missing vms
-      command: echo virt-install
+    - name: prepare missing debian9 installation resources
+      copy: src=roles/common/files/debian9/ dest=/tmp/debian9/
+      with_items:
+        - "{{ vms }}"
+      when: (inventory_hostname == item.libvirt_host) and (item.vm_name not in virt_vms.list_vms) and (item.os_variant == "debian9")
+      
+    - name: create missing debian9 vms
+      command: virt-install
                --virt-type kvm
                -n "{{ item.vm_name }}"
                -r "{{ item.ram_in_MB }}"
                --vcpus="{{ item.vcpus }}"
                --cpu qemu64,-svm
                -l "{{ installer_location[item.os_variant] }}"
-               --initrd-inject=preseed.cfg \
+               --initrd-inject=/tmp/debian9/preseed.cfg
                --disk vol="{{ item.volumes[0].pool }}/{{ item.volumes[0].name }},bus=virtio"
-               -w network=localnet7,mac="{{ item.mac }}",model=virtio \
-               --os-type "{{ item.os_type }}" \
+               -w network=localnet7,mac="{{ item.mac }}",model=virtio
+               --os-type "{{ item.os_type }}"
                --os-variant "{{ item.os_variant }}"
                --controller usb,model=none
                --graphics none
-               --extra-args "auto=true hostname={{ item.hostname }} console=ttyS0"
+               --extra-args "auto=true hostname={{ item.hostname }} domain={{ item.network }} console=ttyS0"
                --noautoconsole
       with_items:
         - "{{ vms }}"
-      when: (inventory_hostname == item.libvirt_host) and (item.vm_name not in virt_vms)
+      when: (inventory_hostname == item.libvirt_host) and (item.vm_name not in virt_vms.list_vms) and (item.os_variant == "debian9")
+
+    # TODO? now the installation runs, and eventually finishes or fails. how do we know?
 
     - command: echo Hallo
       with_items:
