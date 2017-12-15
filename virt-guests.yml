@@ -86,6 +86,7 @@
                --cpu qemu64,-svm
                -l "{{ installer_location[item.os_variant] }}"
                --initrd-inject=/tmp/debian9/preseed.cfg
+               --initrd-inject=/tmp/debian9/postinst.sh
                --initrd-inject=/tmp/debian9/authorized_keys
                --disk vol="{{ item.volumes[0].pool }}/{{ item.volumes[0].name }},bus=virtio"
                -w network=localnet7,mac="{{ item.mac }}",model=virtio
