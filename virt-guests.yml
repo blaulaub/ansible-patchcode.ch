@@ -42,7 +42,7 @@
           mac: 52:54:00:2a:5c:f8
           volumes:
             - name: vm-another-test.qcow2
-              size_in_MB: 2048
+              size_in_MB: 1536
               pool: qcow
             - name: vm-another-test-swap.qcow2
               size_in_MB: 512
@@ -123,11 +123,18 @@
                --graphics none
                --extra-args "auto=true hostname={{ item.hostname }} domain={{ item.network }} console=ttyS0"
                --noautoconsole
+               --wait=-1
       with_items:
         - "{{ vms }}"
       when: (inventory_hostname == item.libvirt_host) and (item.vm_name not in virt_vms.list_vms) and (item.os_variant == "debian9")
 
     # TODO? now the installation runs, and eventually finishes or fails. how do we know?
+
+    # TODO switch ansible-agent from password to ssh key
+
+    # TODO prepare swap partition
+
+    # TODO include swap partition
 
     - command: echo Hallo
       with_items:
