@@ -1,6 +1,7 @@
 ---
 - name: have ttyS0 listening
   service:
-    name: getty@ttys0
+    name: getty@ttyS0
     enabled: yes
+    state: started
 ...
