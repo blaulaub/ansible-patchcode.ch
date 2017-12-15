@@ -10,44 +10,6 @@
   remote_user: ansible-agent
   become: true
 
-  vars:
-
-    - installer_location:
-        debian9: "http://httpredir.debian.org/debian/dists/stretch/main/installer-amd64/"
-
-    - vms:
-
-        - vm_name: ansible-client
-          hostname: ansible-client
-          network: localnet
-          libvirt_host: wollishofen.localnet
-          ram_in_MB: 1024
-          vcpus: 1
-          os_type: linux
-          os_variant: debian9
-          mac: 52:54:00:03:92:16
-          volumes:
-            - name: ansible-client.qcow2
-              size_in_MB: 2048
-              pool: qcow
-
-        - vm_name: vm-another-test
-          hostname: another-test
-          network: localnet
-          libvirt_host: wollishofen.localnet
-          ram_in_MB: 1024
-          vcpus: 1
-          os_type: linux
-          os_variant: debian9
-          mac: 52:54:00:2a:5c:f8
-          volumes:
-            - name: vm-another-test.qcow2
-              size_in_MB: 1536
-              pool: qcow
-            - name: vm-another-test-swap.qcow2
-              size_in_MB: 512
-              pool: qcow-transient
-
   tasks:
 
     - name: ensure libvirt and python tools are installed
@@ -100,8 +62,17 @@
         - volumes
       when: (inventory_hostname == item.0.libvirt_host) and (item.1.name not in virt_pool_facts.ansible_facts.ansible_libvirt_pools[item.1.pool].volumes)
 
+    # TODO: the following two copy tasks could be nested
+    # TODO: the following copy tasks should be executed once per host (when necessary), not once per missing guest
+
     - name: prepare missing debian9 installation resources
       copy: src=roles/common/files/debian9/ dest=/tmp/debian9/
+      with_items:
+        - "{{ vms }}"
+      when: (inventory_hostname == item.libvirt_host) and (item.vm_name not in virt_vms.list_vms) and (item.os_variant == "debian9")
+
+    - name: provide public ssh key for installation target
+      copy: src=/home/cfuchs/.ssh/id_rsa.pub dest=/tmp/debian9/authorized_keys
       with_items:
         - "{{ vms }}"
       when: (inventory_hostname == item.libvirt_host) and (item.vm_name not in virt_vms.list_vms) and (item.os_variant == "debian9")
@@ -115,6 +86,7 @@
                --cpu qemu64,-svm
                -l "{{ installer_location[item.os_variant] }}"
                --initrd-inject=/tmp/debian9/preseed.cfg
+               --initrd-inject=/tmp/debian9/authorized_keys
                --disk vol="{{ item.volumes[0].pool }}/{{ item.volumes[0].name }},bus=virtio"
                -w network=localnet7,mac="{{ item.mac }}",model=virtio
                --os-type "{{ item.os_type }}"
@@ -136,8 +108,4 @@
 
     # TODO include swap partition
 
-    - command: echo Hallo
-      with_items:
-        - host: wollishofen.localnet
-      when: inventory_hostname == "{{ item.host }}"
 ...

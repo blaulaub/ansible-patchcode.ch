@@ -14,7 +14,7 @@ network_mappings:
         ip: 192.168.7.101
         mac: 52:54:00:14:3c:81
       - host: ansible-client
-        ip: 192.168.7.75
+        ip: 192.168.7.119
         mac:  52:54:00:03:92:16
       - host: mysql
         ip: 192.168.7.103
@@ -40,4 +40,7 @@ network_mappings:
       - host: LoungePC
         ip: 192.168.7.155
         mac: 68:05:ca:12:99:89
+      - host: another-test
+        ip: 192.168.7.120
+        mac: 52:54:00:2a:5c:f8
 ...
