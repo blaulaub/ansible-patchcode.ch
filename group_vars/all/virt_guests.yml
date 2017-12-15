@@ -1,0 +1,37 @@
+---
+installer_location:
+  debian9: "http://httpredir.debian.org/debian/dists/stretch/main/installer-amd64/"
+
+vms:
+
+  - vm_name: ansible-client
+    hostname: ansible-client
+    network: localnet
+    libvirt_host: wollishofen.localnet
+    ram_in_MB: 1024
+    vcpus: 1
+    os_type: linux
+    os_variant: debian9
+    mac: 52:54:00:03:92:16
+    volumes:
+      - name: ansible-client.qcow2
+        size_in_MB: 2048
+        pool: qcow
+
+  - vm_name: vm-another-test
+    hostname: another-test
+    network: localnet
+    libvirt_host: wollishofen.localnet
+    ram_in_MB: 1024
+    vcpus: 1
+    os_type: linux
+    os_variant: debian9
+    mac: 52:54:00:2a:5c:f8
+    volumes:
+      - name: vm-another-test.qcow2
+        size_in_MB: 1536
+        pool: qcow
+      - name: vm-another-test-swap.qcow2
+        size_in_MB: 512
+        pool: qcow-transient
+...
