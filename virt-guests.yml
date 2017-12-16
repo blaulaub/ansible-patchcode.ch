@@ -106,6 +106,16 @@
     # TODO switch ansible-agent from password to ssh key
 
     # TODO prepare swap partition
+    - name: update domain xmls
+      command: virsh dumpxml "{{ item.vm_name }}"
+      with_items:
+        - "{{ vms }}"
+      when: inventory_hostname == item.libvirt_host
+      register: virsh_dumpxml_output
+
+    - debug: var=virt_pool_facts
+    - debug: var=virt_vms
+    - debug: var=virsh_dumpxml_output.results
 
     # TODO include swap partition
 
