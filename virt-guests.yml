@@ -62,20 +62,20 @@
         - volumes
       when: (inventory_hostname == item.0.libvirt_host) and (item.1.name not in virt_pool_facts.ansible_facts.ansible_libvirt_pools[item.1.pool].volumes)
 
-    # TODO: the following two copy tasks could be nested
     # TODO: the following copy tasks should be executed once per host (when necessary), not once per missing guest
 
     - name: prepare missing debian9 installation resources
-      copy: src=roles/common/files/debian9/ dest=/tmp/debian9/
-      with_items:
+      vars:
+        files:
+          - src: roles/common/files/debian9/
+            dst: /tmp/debian9/
+          - src: /home/cfuchs/.ssh/id_rsa.pub
+            dst: /tmp/debian9/authorized_keys
+      copy: src="{{ item[1].src }}" dest="{{ item[1].dst }}"
+      with_nested:
         - "{{ vms }}"
-      when: (inventory_hostname == item.libvirt_host) and (item.vm_name not in virt_vms.list_vms) and (item.os_variant == "debian9")
-
-    - name: provide public ssh key for installation target
-      copy: src=/home/cfuchs/.ssh/id_rsa.pub dest=/tmp/debian9/authorized_keys
-      with_items:
-        - "{{ vms }}"
-      when: (inventory_hostname == item.libvirt_host) and (item.vm_name not in virt_vms.list_vms) and (item.os_variant == "debian9")
+        - "{{ files }}"
+      when: (inventory_hostname == item[0].libvirt_host) and (item[0].vm_name not in virt_vms.list_vms) and (item[0].os_variant == "debian9")
       
     - name: create missing debian9 vms
       command: virt-install
