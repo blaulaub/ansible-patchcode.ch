@@ -1,7 +1,3 @@
 ---
-- name: have ttyS0 listening
-  service:
-    name: getty@ttyS0
-    enabled: yes
-    state: started
+- include: task_enable_ttyS0.yml
 ...
