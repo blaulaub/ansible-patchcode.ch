@@ -4,7 +4,7 @@
   lineinfile:
     dest: "{{ dnsmasq_config_file }}"
     # note: the following regexp maybe is too precise and could be more tolerant
-    regexp: "^dhcp-host={{ item.mac }},{{ item.host }},{{ item.ip }},2h"
+    regexp: "(?i)^dhcp-host={{ item.mac }},{{ item.host }},{{ item.ip }},2h"
     state: absent
   with_items: "{{ network_mappings['localnet'].hosts }}"
   notify: restart dnsmasq
