@@ -4,7 +4,13 @@
 # this file contains networks and hosts in that network
 #
 network_mappings:
-  localnet:
+
+  managed_networks:
+
+    - patchcode_ch
+
+  patchcode_ch:
+    domain: patchcode.ch
     netmask: 192.168.7.0/24
     gateway: 192.168.7.102
     nameserver:

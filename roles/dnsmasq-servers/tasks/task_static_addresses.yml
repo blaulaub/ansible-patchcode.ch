@@ -5,7 +5,7 @@
     dest: "{{ dnsmasq_config_file }}"
     regexp: "(?i)^dhcp-host=({{ item.mac }}|[0-9a-f:]+,{{ item.host }}|[0-9a-f:]+,[a-zA-Z0-9-]+,{{ item.ip }}),"
     state: absent
-  with_items: "{{ network_mappings['localnet'].hosts }}"
+  with_items: "{{ network_mappings['patchcode_ch'].hosts }}"
   notify: restart dnsmasq
 
 
