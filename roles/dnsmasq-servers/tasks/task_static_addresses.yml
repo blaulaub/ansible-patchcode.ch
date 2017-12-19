@@ -3,8 +3,7 @@
 - name: "cleanup: remove redundant static hosts from main config"
   lineinfile:
     dest: "{{ dnsmasq_config_file }}"
-    # note: the following regexp maybe is too precise and could be more tolerant
-    regexp: "(?i)^dhcp-host={{ item.mac }},{{ item.host }},{{ item.ip }},2h"
+    regexp: "(?i)^dhcp-host=({{ item.mac }}|[0-9a-f:]+,{{ item.host }}|[0-9a-f:]+,[a-zA-Z0-9-]+,{{ item.ip }}),"
     state: absent
   with_items: "{{ network_mappings['localnet'].hosts }}"
   notify: restart dnsmasq
