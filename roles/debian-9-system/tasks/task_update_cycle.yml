@@ -1,0 +1,13 @@
+---
+- name: update package index
+  apt: update_cache=yes
+
+- name: upgrade packages
+  apt: upgrade=yes
+
+- name: remove unreferenced packages
+  command: apt-get autoremove -y
+
+- name: cleanup diskspace
+  command: apt-get clean
+...

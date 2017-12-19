@@ -1,0 +1,7 @@
+---
+# ansible 'apt' requires aptitude for some tasks
+- name: have aptitude installed
+  package:
+    name: aptitude
+    state: present
+...
