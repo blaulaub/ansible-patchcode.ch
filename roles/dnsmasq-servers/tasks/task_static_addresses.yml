@@ -10,12 +10,9 @@
 
 
 - name: enlist static hosts and IPs in DHCP/DNS configuration
-  lineinfile:
+  template:
+    src: dnsmasq.dhcp-hosts.conf.j2
     dest: "{{ dnsmasq_dhcp_hosts_config }}"
-    create: yes
-    line: "dhcp-host={{ item.mac }},{{ item.host }},{{ item.ip }},2h"
-    state: present
-  with_items: "{{ network_mappings['localnet'].hosts }}"
   notify: restart dnsmasq
 
 - name: include static host config in main config
