@@ -1,0 +1,7 @@
+---
+
+- name: have dnsmasq installed
+  package:
+    name: dnsmasq
+    state: present
+...

@@ -1,10 +1,28 @@
 ---
 
-- name: enlist static hosts and IPs in DHCP/DNS configuration
+- name: "cleanup: remove redundant static hosts from main config"
   lineinfile:
     dest: "{{ dnsmasq_config_file }}"
+    # note: the following regexp maybe is too precise and could be more tolerant
+    regexp: "^dhcp-host={{ item.mac }},{{ item.host }},{{ item.ip }},2h"
+    state: absent
+  with_items: "{{ network_mappings['localnet'].hosts }}"
+  notify: restart dnsmasq
+
+
+- name: enlist static hosts and IPs in DHCP/DNS configuration
+  lineinfile:
+    dest: "{{ dnsmasq_dhcp_hosts_config }}"
+    create: yes
     line: "dhcp-host={{ item.mac }},{{ item.host }},{{ item.ip }},2h"
     state: present
   with_items: "{{ network_mappings['localnet'].hosts }}"
+  notify: restart dnsmasq
+
+- name: include static host config in main config
+  lineinfile:
+    dest: "{{ dnsmasq_config_file }}"
+    line: "conf-file={{ dnsmasq_dhcp_hosts_config }}"
+    state: present
   notify: restart dnsmasq
 ...
