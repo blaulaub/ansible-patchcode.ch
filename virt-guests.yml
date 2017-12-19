@@ -49,18 +49,18 @@
       with_subelements:
         - "{{ vms }}"
         - volumes
-      when: (inventory_hostname == item.0.libvirt_host) and (item.1.name not in virt_pool_facts.ansible_facts.ansible_libvirt_pools[item.1.pool].volumes)
+      when: (this_host_label == item.0.libvirt_host_label) and (item.1.name not in virt_pool_facts.ansible_facts.ansible_libvirt_pools[item.1.pool].volumes)
 
     - name: update list of volume pools and volumes
       virt_pool: command=facts
       register: virt_pool_facts
 
     - name: report error on missing volumes
-      fail: "It seems that host {{ item.0.libvirt_host }} pool {{ item.1.pool }} volume {{ item.1.name}} is missing"
+      fail: "It seems that host {{ item.0.libvirt_host_label }} pool {{ item.1.pool }} volume {{ item.1.name}} is missing"
       with_subelements:
         - "{{ vms }}"
         - volumes
-      when: (inventory_hostname == item.0.libvirt_host) and (item.1.name not in virt_pool_facts.ansible_facts.ansible_libvirt_pools[item.1.pool].volumes)
+      when: (this_host_label == item.0.libvirt_host_label) and (item.1.name not in virt_pool_facts.ansible_facts.ansible_libvirt_pools[item.1.pool].volumes)
 
     # TODO: the following copy tasks should be executed once per host (when necessary), not once per missing guest
 
@@ -75,7 +75,7 @@
       with_nested:
         - "{{ vms }}"
         - "{{ files }}"
-      when: (inventory_hostname == item[0].libvirt_host) and (item[0].vm_name not in virt_vms.list_vms) and (item[0].os_variant == "debian9")
+      when: (this_host_label == item[0].libvirt_host_label) and (item[0].vm_name not in virt_vms.list_vms) and (item[0].os_variant == "debian9")
       
     - name: create missing debian9 vms
       command: virt-install
@@ -99,7 +99,7 @@
                --wait=-1
       with_items:
         - "{{ vms }}"
-      when: (inventory_hostname == item.libvirt_host) and (item.vm_name not in virt_vms.list_vms) and (item.os_variant == "debian9")
+      when: (this_host_label == item.libvirt_host_label) and (item.vm_name not in virt_vms.list_vms) and (item.os_variant == "debian9")
 
     # TODO? now the installation runs, and eventually finishes or fails. how do we know?
 
@@ -110,7 +110,7 @@
       command: virsh dumpxml "{{ item.vm_name }}"
       with_items:
         - "{{ vms }}"
-      when: inventory_hostname == item.libvirt_host
+      when: this_host_label == item.libvirt_host_label
       register: virsh_dumpxml_output
 
     - debug: var=virt_pool_facts

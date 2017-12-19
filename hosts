@@ -2,42 +2,42 @@
 # file: hosts
 
 [debian9]
-white-dwarf.localnet
-wollishofen.localnet
-influx.localnet
-dovecot.localnet
-freenet.localnet
-tomcat.localnet
-smtp.localnet
-www.localnet
-mysql.localnet
-another-test.localnet
+white-dwarf.patchcode.ch
+wollishofen.patchcode.ch
+influx.patchcode.ch
+dovecot.patchcode.ch
+freenet.patchcode.ch
+tomcat.patchcode.ch
+smtp.patchcode.ch
+www.patchcode.ch
+mysql.patchcode.ch
+another-test.patchcode.ch
 
 [root-btrfs]
-tomcat.localnet
-dovecot.localnet
-mysql.localnet
-white-dwarf.localnet
-smtp.localnet
-wollishofen.localnet
+tomcat.patchcode.ch
+dovecot.patchcode.ch
+mysql.patchcode.ch
+white-dwarf.patchcode.ch
+smtp.patchcode.ch
+wollishofen.patchcode.ch
 
 [testing]
 ansible-client
 
 [dnsmasq_servers]
-white-dwarf.localnet
-wollishofen.localnet
+white-dwarf.patchcode.ch
+wollishofen.patchcode.ch
 
 [libvirt_servers]
-white-dwarf.localnet
-wollishofen.localnet
+white-dwarf.patchcode.ch
+wollishofen.patchcode.ch
 
 [headless_vms]
-influx.localnet
-dovecot.localnet
-freenet.localnet
-tomcat.localnet
-smtp.localnet
-www.localnet
-mysql.localnet
-another-test.localnet
+influx.patchcode.ch
+dovecot.patchcode.ch
+freenet.patchcode.ch
+tomcat.patchcode.ch
+smtp.patchcode.ch
+www.patchcode.ch
+mysql.patchcode.ch
+another-test.patchcode.ch

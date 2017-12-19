@@ -5,11 +5,11 @@ dnsmasq_dhcp_hosts_config: /etc/dnsmasq.dhcp-hosts.conf
 
 dnsmasq_confs:
 
-  - host: wollishofen.localnet
+  wollishofen_patchcode_ch:
     interfaces:
       - "br0"
 
-  - host: white-dwarf.localnet
+  white_dwarf_patchcode_ch:
     interfaces:
       - "br0"
 ...

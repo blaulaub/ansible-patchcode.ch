@@ -17,11 +17,9 @@
 - name: "dnsmasq: Interfaces"
   lineinfile:
     dest: "{{ dnsmasq_config_file }}"
-    line: "interface={{item.1}}"
+    line: "interface={{ item }}"
     state: present
   notify: restart dnsmasq
-  when: inventory_hostname == "{{item.0.host}}"
-  with_subelements:
-    - "{{ dnsmasq_confs}} "
-    - interfaces
+  with_items:
+    - "{{ dnsmasq_confs[this_host_label].interfaces }}"
 ...
