@@ -1,3 +1,5 @@
 ---
-- include: task_install_and_start_dnsmasq_service.yml
+- include: task_install_and_start_service.yml
+- include: task_essential_configuration_lines.yml
+- include: task_static_addresses.yml
 ...

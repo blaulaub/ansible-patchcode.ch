@@ -1,0 +1,13 @@
+---
+
+- name: have dnsmasq installed
+  package:
+    name: dnsmasq
+    state: present
+
+- name: have dnsmasq running
+  service:
+    name: dnsmasq
+    enabled: yes
+    state: started
+...

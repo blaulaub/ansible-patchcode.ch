@@ -1,0 +1,10 @@
+---
+
+- name: enlist static hosts and IPs in DHCP/DNS configuration
+  lineinfile:
+    dest: "{{ dnsmasq_config_file }}"
+    line: "dhcp-host={{ item.mac }},{{ item.host }},{{ item.ip }},2h"
+    state: present
+  with_items: "{{ network_mappings['localnet'].hosts }}"
+  notify: restart dnsmasq
+...

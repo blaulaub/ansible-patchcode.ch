@@ -1,9 +1,5 @@
 ---
 
-- name: have dnsmasq installed
-  package:
-    name: dnsmasq
-    state: present
 - name: "dnsmasq: Essential configuration lines"
   lineinfile:
     dest: "{{ dnsmasq_config_file }}"
@@ -17,6 +13,7 @@
       line: "bogus-priv"
     - comment: "Never bind to wildcard address."
       line: "bind-interfaces"
+
 - name: "dnsmasq: Interfaces"
   lineinfile:
     dest: "{{ dnsmasq_config_file }}"
@@ -27,16 +24,4 @@
   with_subelements:
     - "{{ dnsmasq_confs}} "
     - interfaces
-- name: enlist static hosts and IPs in DHCP/DNS configuration
-  lineinfile:
-    dest: "{{ dnsmasq_config_file }}"
-    line: "dhcp-host={{ item.mac }},{{ item.host }},{{ item.ip }},2h"
-    state: present
-  with_items: "{{ network_mappings['localnet'].hosts }}"
-  notify: restart dnsmasq
-- name: have dnsmasq running
-  service:
-    name: dnsmasq
-    enabled: yes
-    state: started
 ...
