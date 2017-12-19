@@ -7,12 +7,22 @@
   remote_user: ansible-agent
   become: true
   tasks:
+
+    # ansible 'apt' requires aptitude for some tasks
+    - name: have aptitude installed
+      package:
+        name: aptitude
+        state: present
+
     - name: update package index
       apt: update_cache=yes
+
     - name: upgrade packages
       apt: upgrade=yes
+
     - name: remove unreferenced packages
       command: apt-get autoremove -y
+
     - name: cleanup diskspace
       command: apt-get clean
 ...
