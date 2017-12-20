@@ -6,6 +6,14 @@
 #   for my home network with ~2 physical servers and ~8 qemu-kvm machines
 
 
+#  I want some maintenance for my Debian systems:
+
+- hosts: debian9
+  remote_user: ansible-agent
+  become: true
+  roles:
+    - debian-9-system
+
 #  I use dnsmasq for DHCP, TFTP and DNS:
 
 - hosts: dnsmasq_servers

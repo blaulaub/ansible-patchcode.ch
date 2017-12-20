@@ -1,4 +1,22 @@
 ---
+# group_vars/all_virt_guests.yml
+
+
+# This file contains VM definitions. First purpose of such data is
+# to create new VMs as soon as new definions are added. A secondary
+# use may be to update VM configuration on the fly.
+
+
+# TODO detect VMs migrated to other hosts; it is possible to move a VM
+#      from one virtualisation host to another, and have it running there.
+#      could this be a problem? could it happen that a migrated VM is
+#      considered missing and recreated, causing some kind of collision?
+# also: the present data structure strongly couples a VM to a host. It might
+#      help to separate VM definition and VM-to-default host association.
+# also: there is no concept of multiple hosts working in team, neither a
+#      concept of host capabilities (e.g., RAM capacity vs RAM demand)
+
+
 installer_location:
   debian9: "http://httpredir.debian.org/debian/dists/stretch/main/installer-amd64/"
 
