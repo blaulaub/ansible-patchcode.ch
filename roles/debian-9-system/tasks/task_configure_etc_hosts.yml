@@ -2,5 +2,5 @@
 - name: "write etc/hosts"
   template:
     src: hosts.j2
-    dest: /etc/hosts.try
+    dest: /etc/hosts
 ...

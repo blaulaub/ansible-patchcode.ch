@@ -5,7 +5,8 @@
 
 {% for network in network_mappings.managed_networks %}
 {% for item in network_mappings[network].hosts %}
-{{ item.ip }} {{ item.host }}.{{ network_mappings[network].domain }} {{ item.host }} 
+{{ item.ip }}   {{ item.host }}.{{ network_mappings[network].domain }} {{ item.host }}{% for alias in network_mappings[network].aliases %}{% if item.ip == alias.ip %} {{ alias.host }}.{{ network_mappings[network].domain }} {{ alias.host }}{% endif %}{% endfor %}
+
 {% endfor %}
 {% endfor %}
 

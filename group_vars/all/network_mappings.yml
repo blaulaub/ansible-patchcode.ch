@@ -65,6 +65,6 @@ network_mappings:
         mac: 1C:6F:65:52:DA:EC
 
     aliases:
-      - alias: apt-cacher-ng
+      - host: apt-cacher-ng
         ip: 192.168.7.112
 ...
