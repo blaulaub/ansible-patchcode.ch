@@ -1,4 +1,9 @@
 ---
+
+# NOTE we may need to install packages or whatever
+
+# NOTE we may need to activate linux forwarding
+
 - name: write iptables routing config
   tags: iptables
   template:
