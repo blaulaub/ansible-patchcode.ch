@@ -2,7 +2,12 @@
 
 # NOTE we may need to install packages or whatever
 
-# NOTE we may need to activate linux forwarding
+- name: enable IPv4 forwarding
+  tags: iptables
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: yes
 
 - name: write iptables routing config
   tags: iptables
