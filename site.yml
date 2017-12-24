@@ -9,7 +9,6 @@
 #  I want some maintenance for my Debian systems:
 
 - hosts: debian9
-  remote_user: ansible-agent
   become: true
   roles:
     - debian-9-system
@@ -17,7 +16,6 @@
 #  I use dnsmasq for DHCP, TFTP and DNS:
 
 - hosts: dnsmasq_servers
-  remote_user: ansible-agent
   become: true
   roles:
     - dnsmasq-servers
@@ -26,7 +24,6 @@
 #  I have a number of headless virtual machines
 
 - hosts: headless_vms
-  remote_user: ansible-agent
   become: true
   roles:
     - ttyS0-servers
