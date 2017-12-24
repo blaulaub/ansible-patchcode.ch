@@ -18,27 +18,27 @@
 - hosts: dnsmasq_servers
   become: true
   roles:
-    - dnsmasq-servers
+    - dnsmasq-server
 
 #  I have some NAT router
 
 - hosts: nat_routers
   become: true
   roles:
-    - nat-routers
+    - nat-router
 
 #  I use unbound for DNS:
 
 - hosts: unbound_servers
   become: true
   roles:
-    - unbound-servers
+    - unbound-server
 
 #  I have a number of headless virtual machines
 
 - hosts: headless_vms
   become: true
   roles:
-    - ttyS0-servers
-    - powerbutton-listeners
+    - ttyS0-server
+    - powerbutton-listener
 ...
