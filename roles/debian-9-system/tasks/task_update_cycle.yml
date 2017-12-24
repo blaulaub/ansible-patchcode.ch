@@ -7,13 +7,8 @@
 - name: upgrade packages
   apt: upgrade=yes
   notify:
+    - remove unused packages
     - clean package download cache
   tags:
     - packages-update
-
-- name: remove unreferenced packages
-  command: apt-get autoremove -y
-  tags:
-    - packages-update
-    - packages-update-cleanup
 ...
