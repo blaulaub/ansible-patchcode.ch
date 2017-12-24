@@ -20,6 +20,12 @@
   roles:
     - dnsmasq-servers
 
+#  I use unbound for DNS:
+
+- hosts: unbound_servers
+  become: true
+  roles:
+    - unbound-servers
 
 #  I have a number of headless virtual machines
 

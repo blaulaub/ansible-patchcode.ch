@@ -1,0 +1,8 @@
+---
+- name: have unbound installed
+  tags:
+    - unbound
+  package:
+    name: unbound
+    state: present
+...
