@@ -1,0 +1,35 @@
+---
+network_routes:
+
+  white_dwarf_patchcode_ch:
+
+    forwards:
+
+      - ports:
+          - 5060
+          - 5004
+        protos:
+          - tcp
+          - udp
+        destination: 192.168.7.152
+
+      - ports:
+          - 32927
+        protos:
+          - tcp
+          - udp
+        destination: 192.168.7.101
+
+      - ports:
+          - 25
+        protos:
+          - tcp
+        destination: 192.168.7.110
+
+      - ports:
+          - 80
+          - 443
+        protos:
+          - tcp
+        destination: 192.168.7.116
+...

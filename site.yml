@@ -20,6 +20,13 @@
   roles:
     - dnsmasq-servers
 
+#  I have some NAT router
+
+- hosts: nat_routers
+  become: true
+  roles:
+    - nat-routers
+
 #  I use unbound for DNS:
 
 - hosts: unbound_servers
