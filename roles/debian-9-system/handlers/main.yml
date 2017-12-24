@@ -1,0 +1,4 @@
+---
+- name: package download cache cleaner
+  command: apt-get clean
+...
