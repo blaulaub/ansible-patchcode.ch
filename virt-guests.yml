@@ -7,7 +7,6 @@
 
 
 - hosts: libvirt_servers
-  remote_user: ansible-agent
   become: true
 
   tasks:
