@@ -1,0 +1,114 @@
+---
+# inspired by https://github.com/sfromm/ansible-playbooks/
+
+
+- name: ensure libvirt and python tools are installed
+  package: name="{{ item }}" state=present
+  with_items:
+    - python-libvirt
+    - python-lxml
+
+- name: ensure libvirt daemon is running
+  service:
+    name: libvirtd
+    state: started
+    enabled: yes
+
+- name: get list of virtual networks
+  virt_net: command=facts
+  register: virt_net_facts
+
+# TODO: define missing nets
+
+# TODO: check and fix net modifications
+
+- name: get list of volume pools and volumes
+  virt_pool: command=facts
+  register: virt_pool_facts
+
+# TODO: define missing pools
+
+# TODO: check and fix pool modifications
+
+- name: get list of vms
+  virt: command=list_vms
+  register: virt_vms
+
+- name: create missing volumes
+  command: virsh vol-create-as "{{ item.1.pool }}" "{{ item.1.name }}" "{{ item.1.size_in_MB }}"M --format qcow2
+  with_subelements:
+    - "{{ vms }}"
+    - volumes
+  when: (this_host_label == item.0.libvirt_host_label) and (item.1.name not in virt_pool_facts.ansible_facts.ansible_libvirt_pools[item.1.pool].volumes)
+
+- name: update list of volume pools and volumes
+  virt_pool: command=facts
+  register: virt_pool_facts
+
+- name: report error on missing volumes
+  fail: "It seems that host {{ item.0.libvirt_host_label }} pool {{ item.1.pool }} volume {{ item.1.name}} is missing"
+  with_subelements:
+    - "{{ vms }}"
+    - volumes
+  when: (this_host_label == item.0.libvirt_host_label) and (item.1.name not in virt_pool_facts.ansible_facts.ansible_libvirt_pools[item.1.pool].volumes)
+
+# TODO: the following copy tasks should be executed once per host (when necessary), not once per missing guest
+
+- name: prepare missing debian9 installation resources
+  vars:
+    files:
+      # TODO the following contains a file (preseed.cfg) with a plain-text password
+      - src: debian9/
+        dst: /tmp/debian9/
+      # TODO the following should be configurable
+      - src: /home/cfuchs/.ssh/id_rsa.pub
+        dst: /tmp/debian9/authorized_keys
+  copy: src="{{ item[1].src }}" dest="{{ item[1].dst }}"
+  with_nested:
+    - "{{ vms }}"
+    - "{{ files }}"
+  when: (this_host_label == item[0].libvirt_host_label) and (item[0].vm_name not in virt_vms.list_vms) and (item[0].os_variant == "debian9")
+
+- name: create missing debian9 vms
+  command: virt-install
+           --virt-type kvm
+           -n "{{ item.vm_name }}"
+           -r "{{ item.ram_in_MB }}"
+           --vcpus="{{ item.vcpus }}"
+           --cpu qemu64,-svm
+           -l "{{ installer_location[item.os_variant] }}"
+           --initrd-inject=/tmp/debian9/preseed.cfg
+           --initrd-inject=/tmp/debian9/postinst.sh
+           --initrd-inject=/tmp/debian9/authorized_keys
+           --disk vol="{{ item.volumes[0].pool }}/{{ item.volumes[0].name }},bus=virtio"
+           -w network=localnet7,mac="{{ item.mac }}",model=virtio
+           --os-type "{{ item.os_type }}"
+           --os-variant "{{ item.os_variant }}"
+           --controller usb,model=none
+           --graphics none
+           --extra-args "auto=true hostname={{ item.hostname }} domain={{ network_mappings[item.network_label].domain }} console=ttyS0"
+           --noautoconsole
+           --wait=-1
+  with_items:
+    - "{{ vms }}"
+  when: (this_host_label == item.libvirt_host_label) and (item.vm_name not in virt_vms.list_vms) and (item.os_variant == "debian9")
+
+# TODO? now the installation runs, and eventually finishes or fails. how do we know?
+
+# TODO switch ansible-agent from password to ssh key
+
+# TODO prepare swap partition
+- name: update domain xmls
+  command: virsh dumpxml "{{ item.vm_name }}"
+  with_items:
+    - "{{ vms }}"
+  when: this_host_label == item.libvirt_host_label
+  register: virsh_dumpxml_output
+
+- debug: var=virt_pool_facts
+- debug: var=virt_vms
+- debug: var=virsh_dumpxml_output.results
+
+# TODO include swap partition
+
+...
