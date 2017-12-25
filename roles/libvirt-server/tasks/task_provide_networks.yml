@@ -1,0 +1,9 @@
+---
+- name: get list of virtual networks
+  virt_net: command=facts
+  register: virt_net_facts
+
+# TODO: define missing nets
+
+# TODO: check and fix net modifications
+...

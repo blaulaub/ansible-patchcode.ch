@@ -1,0 +1,22 @@
+---
+- name: get list of vms
+  virt: command=list_vms
+  register: virt_vms
+
+- name: get VM definitions
+  set_fact: vm_definition="{{virt_guests[item]}}"
+  with_items: "{{ virt_host_guests[this_host_label] }}"
+  register: vm_definitions
+
+- name: check presence of defined VMs
+  set_fact: present=yes
+  with_items:
+    - "{{ vm_definitions.results | json_query('[*].ansible_facts.vm_definition') }}"
+  when: item.vm_name in virt_vms.list_vms
+  register: vm_definitions_presence
+
+- name: list VMs to install
+  debug: var=item
+  with_items:
+    - "{{ vm_definitions_presence.results | json_query('[?skipped].item') }}"
+...

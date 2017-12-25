@@ -1,0 +1,14 @@
+---
+- name: ensure libvirt and python tools are installed
+  package: name="{{ item }}" state=present
+  with_items:
+    - python-libvirt
+    - python-lxml
+    - python-jmespath
+
+- name: ensure libvirt daemon is running
+  service:
+    name: libvirtd
+    state: started
+    enabled: yes
+...
