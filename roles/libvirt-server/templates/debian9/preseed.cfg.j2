@@ -10,16 +10,16 @@ d-i mirror/http/proxy string
 
 # Root account setup. You can set password in plain-text or pre-encrypted.
 #d-i passwd/root-password-crypted password [recommended: output from "mkpasswd --method=sha-512"]
-d-i passwd/root-password password UkEW31haKhdPN7cO46Ay_JBcyIXneO2Z
-d-i passwd/root-password-again password UkEW31haKhdPN7cO46Ay_JBcyIXneO2Z
+d-i passwd/root-password password {{ initial_ansible_ssh_user_password }}
+d-i passwd/root-password-again password {{ initial_ansible_ssh_user_password }}
 
 # User account setup.
 #d-i passwd/make-user boolean false
-d-i passwd/user-fullname string ansible-agent
-d-i passwd/username string ansible-agent
+d-i passwd/user-fullname string {{ ansible_ssh_user }}
+d-i passwd/username string {{ ansible_ssh_user }}
 #d-i passwd/user-password-crypted password [recommended: output from "mkpasswd --method=sha-512"]
-d-i passwd/user-password password UkEW31haKhdPN7cO46Ay_JBcyIXneO2Z
-d-i passwd/user-password-again password UkEW31haKhdPN7cO46Ay_JBcyIXneO2Z
+d-i passwd/user-password password {{ initial_ansible_ssh_user_password }}
+d-i passwd/user-password-again password {{ initial_ansible_ssh_user_password }}
 
 # Controls whether or not the hardware clock is set to UTC.
 d-i clock-setup/utc boolean true

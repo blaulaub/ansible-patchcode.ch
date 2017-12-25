@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Install SSH key for ansible agent
+mkdir -m700 /home/{{ ansible_ssh_user }}/.ssh
+mv /tmp/authorized_keys /home/{{ ansible_ssh_user }}/.ssh/authorized_keys
+chmod 0600 /home/{{ ansible_ssh_user }}/.ssh/authorized_keys
+chown -R {{ ansible_ssh_user }}:{{ ansible_ssh_user }} /home/{{ ansible_ssh_user }}/.ssh
+
+# let ansible agent sudo without password
+echo "{{ ansible_ssh_user }} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
