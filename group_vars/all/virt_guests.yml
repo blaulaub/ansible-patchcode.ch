@@ -11,8 +11,6 @@
 #      from one virtualisation host to another, and have it running there.
 #      could this be a problem? could it happen that a migrated VM is
 #      considered missing and recreated, causing some kind of collision?
-# also: the present data structure strongly couples a VM to a host. It might
-#      help to separate VM definition and VM-to-default host association.
 # also: there is no concept of multiple hosts working in team, neither a
 #      concept of host capabilities (e.g., RAM capacity vs RAM demand)
 
@@ -20,12 +18,56 @@
 installer_location:
   debian9: "http://httpredir.debian.org/debian/dists/stretch/main/installer-amd64/"
 
-vms:
 
-  - vm_name: vm-another-test
+# virt_host_guests lists guests per virtualization host
+virt_host_guests:
+
+  white_dwarf_patchcode_ch:
+    - vm_freenet
+
+  wollishofen_patchcode_ch:
+    - vm_mysql
+    - vm_another_test
+
+
+# virt_guests contains definitions of VM guests
+virt_guests:
+
+  vm_mysql:
+    vm_name: vm-mysql
+    hostname: mysql
+    network_label: patchcode_ch
+    ram_in_MB: 512
+    vcpus: 1
+    os_type: linux
+    os_variant: debian9
+    mac: 52:54:00:a1:01:dc
+    volumes:
+      - name: vm-mysql.qcow2
+        size_in_MB: 2048
+        pool: qcow
+      - name: vm-mysql-swap.qcow2
+        size_in_MB: 512
+        pool: qcow-transient
+
+  vm_freenet:
+    vm_name: vm-freenet
+    hostname: freenet
+    network_label: patchcode_ch
+    ram_in_MB: 2048
+    vcpus: 4
+    os_type: linux
+    os_variant: debian9
+    mac: 52:54:00:14:3c:81
+    volumes:
+      - name: vm-freenet.qcow2
+        size_in_MB: 2048
+        pool: qcow
+
+  vm_another_test:
+    vm_name: vm-another-test
     hostname: another-test
     network_label: patchcode_ch
-    libvirt_host_label: wollishofen_patchcode_ch
     ram_in_MB: 1024
     vcpus: 1
     os_type: linux
