@@ -65,19 +65,6 @@
     - ansible_facts.vm_definition.volumes
   when: item.1.name not in virt_pool_facts.ansible_facts.ansible_libvirt_pools[item.1.pool].volumes
 
-# - debug: var=vm_definitions.results
-
-#- debug: var=item.ansible_facts.vm_definition
-#  with_items:
-#    - "{{ vm_definitions.results }}"
-
-#- vars:
-#    debian9_filter: "[?ansible_facts.vm_definition.os_variant=='debian9'].ansible_facts.vm_definition"
-#    v: "{{ vm_definitions.results | json_query(debian9_filter) }}"
-#  debug: var=v
-
-- debug: var=vm_definitions_presence
-
 - name: list VMs to install
   debug: var=item
   with_items:
