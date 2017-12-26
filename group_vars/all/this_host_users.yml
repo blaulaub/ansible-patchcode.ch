@@ -1,0 +1,6 @@
+---
+# Set the default for this_host_users, which is an empty list.
+# Should by overridden by definitions in host_vars/*, if required.
+
+this_host_users: []
+...

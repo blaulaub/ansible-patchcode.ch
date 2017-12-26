@@ -1,0 +1,31 @@
+---
+- name: create user groups
+  group:
+    name: "{{ users[item].name}}"
+    gid: "{{users[item].gid}}"
+    state: present
+  with_items:
+    - "{{ this_host_users }}"
+  tags: user_accounts
+
+- name: create users
+  user:
+    name: "{{ users[item].name}}"
+    group: "{{ users[item].name}}"
+    uid: "{{users[item].uid}}"
+    shell: "/bin/bash"
+    state: present
+  with_items:
+    - "{{ this_host_users }}"
+  tags: user_accounts
+  
+# TODO why not deploy more than one key?
+- name: deploy user's public ssh keys
+  authorized_key:
+    user: "{{ users[item].name }}"
+    key: "{{ users[item].public_ssh }}"
+    state: present
+  with_items:
+    - "{{ this_host_users }}"
+  tags: user_accounts
+...

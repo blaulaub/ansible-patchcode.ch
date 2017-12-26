@@ -1,0 +1,14 @@
+---
+# This contains global user properties, like user name and user id.
+#
+# To create users on particular systems, you also need add the respective
+# user names to the "this_host_users" list.
+
+users:
+
+  cfuchs:
+    name: cfuchs
+    uid: 1770612
+    gid: 1770612
+    public_ssh: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCX2kXhD4YgEHC9JIZneks1pjU2lAgEIB2oCpgx3dXIliVeVqwFpioXGwzfrQMtj7vDxsx2An0keUJ2JLD/TpGc9hFFUcWCogXsjsXd0l2y1XdEag2UMfbvrIDUrrZMgFXDofXuv7aPTVTg4UuZm1l4Csf82ZTMhYIq0MioLk/M+tSYFo/KkdQs0Ye2HpGQqIMZsmPOJA5HnUWg87YrzPi8OSa4l2RBcT0FgeBys66R60Js0eKMgDQovqXJpqLhpFHMPQVthnj62NVmWut3WNrdUaxvrTK8BgHvRKsAHFXzayrU7DlsEdFC71zjaby29/aCOVhAP8azu0/k95Ht3c9N cfuchs@wollishofen"
+...
