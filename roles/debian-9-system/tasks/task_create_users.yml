@@ -1,31 +1,38 @@
 ---
-- name: create user groups
+- name: select users for this host
+  set_fact: present=yes
+  when: item.key in this_host_users
+  with_dict: "{{ active_users }}"
+  register: this_host_active_users
+  tags: user_accounts
+
+- name: create user groups for active users
   group:
-    name: "{{ users[item].name}}"
-    gid: "{{users[item].gid}}"
+    name: "{{ active_users[item].name}}"
+    gid: "{{active_users[item].gid}}"
     state: present
   with_items:
     - "{{ this_host_users }}"
   tags: user_accounts
 
-- name: create users
+- name: create active users
   user:
-    name: "{{ users[item].name}}"
-    group: "{{ users[item].name}}"
-    uid: "{{users[item].uid}}"
+    name: "{{ active_users[item].name}}"
+    group: "{{ active_users[item].name}}"
+    uid: "{{active_users[item].uid}}"
     shell: "/bin/bash"
     state: present
   with_items:
     - "{{ this_host_users }}"
   tags: user_accounts
-  
-# TODO why not deploy more than one key?
-- name: deploy user's public ssh keys
+
+- name: deploy public ssh keys for active users
   authorized_key:
-    user: "{{ users[item].name }}"
-    key: "{{ users[item].public_ssh }}"
+    user: "{{ item.0.name }}"
+    key: "{{ item.1 }}"
     state: present
-  with_items:
-    - "{{ this_host_users }}"
+  with_subelements:
+    - "{{ this_host_active_users.results | json_query('[?ansible_facts.present].item.value') }}"
+    - public_ssh_keys
   tags: user_accounts
 ...

@@ -4,11 +4,13 @@
 # To create users on particular systems, you also need add the respective
 # user names to the "this_host_users" list.
 
-users:
+active_users:
 
   cfuchs:
     name: cfuchs
     uid: 1770612
     gid: 1770612
-    public_ssh: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCX2kXhD4YgEHC9JIZneks1pjU2lAgEIB2oCpgx3dXIliVeVqwFpioXGwzfrQMtj7vDxsx2An0keUJ2JLD/TpGc9hFFUcWCogXsjsXd0l2y1XdEag2UMfbvrIDUrrZMgFXDofXuv7aPTVTg4UuZm1l4Csf82ZTMhYIq0MioLk/M+tSYFo/KkdQs0Ye2HpGQqIMZsmPOJA5HnUWg87YrzPi8OSa4l2RBcT0FgeBys66R60Js0eKMgDQovqXJpqLhpFHMPQVthnj62NVmWut3WNrdUaxvrTK8BgHvRKsAHFXzayrU7DlsEdFC71zjaby29/aCOVhAP8azu0/k95Ht3c9N cfuchs@wollishofen"
+    public_ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCX2kXhD4YgEHC9JIZneks1pjU2lAgEIB2oCpgx3dXIliVeVqwFpioXGwzfrQMtj7vDxsx2An0keUJ2JLD/TpGc9hFFUcWCogXsjsXd0l2y1XdEag2UMfbvrIDUrrZMgFXDofXuv7aPTVTg4UuZm1l4Csf82ZTMhYIq0MioLk/M+tSYFo/KkdQs0Ye2HpGQqIMZsmPOJA5HnUWg87YrzPi8OSa4l2RBcT0FgeBys66R60Js0eKMgDQovqXJpqLhpFHMPQVthnj62NVmWut3WNrdUaxvrTK8BgHvRKsAHFXzayrU7DlsEdFC71zjaby29/aCOVhAP8azu0/k95Ht3c9N cfuchs@wollishofen"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYhoRrsAQf2Z2Ao0KFMR7r4fIBuvx79IzOkRZ5Jy7GDkXjEulLZpXUXtIsZolbotEZ9SuW+ZOOd9PhLTVJ4IoVKG9oQbqVjR9TVGI0tMcWwj2fx1DGHfkPPNSdlorj9zad6Ud/7YzgLBhRxrqFjgfctMpO8l8FXPGYjDWpEyitPyZJR34zA29tCIKoMhORUdUrck+PfmytvG1viIPxrUNvRdPDpGvWHEJ1yBCVDHIdxUqv7DSTs40Zx4UAUdpn8qUOM8ONvQWIyOT/n+g95owPv/RtXFOnPjaq0MKUF8PqBjA1PqP+A+I7qEjVRX+2VXcD5OfmvxDC9haj4rqX2Zyf cfuchs@LoungePC"
 ...
