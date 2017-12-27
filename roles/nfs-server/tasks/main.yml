@@ -1,0 +1,25 @@
+---
+
+- name: have NFS server installed
+  package:
+    name: nfs-kernel-server
+    state: present
+  tags:
+    - nfs-server
+
+- name: enlist NFS exports
+  template:
+    src: exports.j2
+    dest: /etc/exports
+  tags:
+    - nfs-server
+  notify: restart nfs-kernel-server
+
+- name: have nfs service running
+  service:
+    name: nfs-kernel-server
+    enabled: yes
+    state: started
+  tags:
+    - nfs-server
+...

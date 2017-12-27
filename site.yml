@@ -20,6 +20,13 @@
   roles:
     - dnsmasq-server
 
+# I have an NFS server
+
+- hosts: nfs_servers
+  become: true
+  roles:
+    - nfs-server
+
 #  I have some NAT router
 
 - hosts: nat_routers
