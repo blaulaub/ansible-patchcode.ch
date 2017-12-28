@@ -73,26 +73,9 @@ nfs_exports:
         rw_clients: []
         ro_clients:
           - litserv.patchcode.ch
-      - path: /share/vm-dovecot/home
-        rw_clients:
-          - dovecot.patchcode.ch
-        ro_clients: []
       - path: /share/vm-dovecot/var
         rw_clients:
           - dovecot.patchcode.ch
-        ro_clients: []
-
-      - path: /share/vm-smtp
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
-      - path: /share/vm-smtp/home
-        rw_clients:
-          - smtp.patchcode.ch
-        ro_clients: []
-      - path: /share/vm-smtp/var
-        rw_clients:
-          - smtp.patchcode.ch
         ro_clients: []
 
       - path: /share/vm-tomcat
