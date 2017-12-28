@@ -48,6 +48,12 @@ network_mappings:
       - host: another-test
         ip: 192.168.7.120
         mac: 52:54:00:2a:5c:f8
+      - host: WNR3500Lv2
+        ip: 192.168.7.121
+        mac: 6c:b0:ce:ba:72:bd
+      - host: Stormwind
+        ip: 192.168.7.122
+        mac: 74:d0:2b:24:2a:d7
       - host: C475P
         ip: 192.168.7.152
         mac: 00:01:E3:79:EA:87
