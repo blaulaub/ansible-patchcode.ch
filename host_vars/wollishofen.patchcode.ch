@@ -91,19 +91,6 @@ nfs_exports:
           - tomcat.patchcode.ch
         ro_clients: []
 
-      - path: /share/vm-www
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
-      - path: /share/vm-www/home
-        rw_clients:
-          - www.patchcode.ch
-        ro_clients: []
-      - path: /share/vm-www/var
-        rw_clients:
-          - www.patchcode.ch
-        ro_clients: []
-
       - path: /share/vm-influx
         rw_clients: []
         ro_clients:
