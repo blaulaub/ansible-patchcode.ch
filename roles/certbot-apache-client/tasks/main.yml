@@ -1,0 +1,16 @@
+---
+# note: managing certificates is a manual process, ansible
+# will only be used to provide the bare necessities.
+#
+# More certificates can be added by
+# sudo certbot --expand -d patchcode.ch,smtp.patchcode.ch,www.patchcode.ch,mysql.patchcode.ch
+#
+# This may require changing the DNS configuration, to avoid NXDOMAIN during verification
+
+- name: have certbot (Apache) installed
+  package:
+    name: python-certbot-apache
+    state: present
+  tags:
+    - certbot
+...
