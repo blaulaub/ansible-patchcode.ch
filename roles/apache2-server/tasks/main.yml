@@ -1,0 +1,17 @@
+---
+
+- name: have Apache2 installed
+  package:
+    name: apache2
+    state: present
+  tags:
+    - apache2-server
+
+- name: have Apache2 service running
+  service:
+    name: apache2
+    enabled: yes
+    state: started
+  tags:
+    - apache2-server
+...

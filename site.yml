@@ -48,4 +48,12 @@
   roles:
     - ttyS0-server
     - powerbutton-listener
+
+#  I have some apache 2 servers
+
+- hosts: apache2_servers
+  become: true
+  roles:
+    - apache2-server
+
 ...
