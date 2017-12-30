@@ -3,6 +3,7 @@
   apt: update_cache=yes
   tags:
     - packages-update
+    - always-changing
 
 - name: upgrade packages
   apt: upgrade=yes

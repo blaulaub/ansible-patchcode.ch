@@ -28,6 +28,7 @@
   become: true
   tags:
     - certbot
+    - always-changing
 
 - name: make a local certbot certificate folder
   file:
