@@ -19,14 +19,33 @@
   package:
     name: python-certbot-apache
     state: present
+  become: true
   tags:
     - certbot
 
 - name: keep certbot certificates updated
   command: "certbot renew"
+  become: true
   tags:
     - certbot
 
-# TODO fetch certificate files
+- name: make a local certbot certificate folder
+  file:
+    path: "/tmp/certs"
+    state: directory
+    mode: 0700
+  delegate_to: localhost
+  tags:
+    - certbot
 
+- name: fetch latest certbot certificates
+  fetch:
+    src: "/etc/letsencrypt/live/{{ item[0] }}/{{ item[1] }}"
+    dest: "/tmp/certs"
+  become: true
+  with_nested:
+    - [ 'patchcode.ch' ]
+    - [ 'fullchain.pem', 'privkey.pem' ]
+  tags:
+    - certbot
 ...

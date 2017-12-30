@@ -59,7 +59,6 @@
 #  I have one(?) certbot client
 
 - hosts: certbot_apache_clients
-  become: true
   roles:
     - certbot-apache-client
 ...
