@@ -54,4 +54,6 @@
   with_items:
     - "{{ vm_definitions_presence.results | json_query('[?skipped].item') }}"
   when: (item.os_variant == "debian9")
+
+# TODO if possible, install VMs public ssh host key locally (so ansible work on them)
 ...

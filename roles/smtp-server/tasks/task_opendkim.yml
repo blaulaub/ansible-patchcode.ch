@@ -1,0 +1,59 @@
+---
+- name: enable DKIM
+  become: true
+  package:
+    name: opendkim
+    state: present
+  tags:
+    - smtp-server
+
+- name: make a local certificate folder
+  delegate_to: localhost
+  file:
+    path: "/tmp/certs"
+    state: directory
+    mode: 0700
+  tags:
+    - smtp-server
+
+- name: prepare DKIM key file
+  delegate_to: localhost
+  vars:
+    src: /etc/ansible/dkim.key.sec
+    dest: /tmp/certs/dkim.key
+  command: "openssl rsa -in {{ src }} -out {{ dest }} -passin pass:{{ wrapper_key }}"
+  tags:
+    - smtp-server
+
+- name: create private key folder (dkim)
+  become: true
+  file:
+    path: "/etc/dkimkeys"
+    state: directory
+    owner: opendkim
+    group: root
+    mode: 0700
+  tags:
+    - smtp-server
+
+- name: deploy DKIM key file
+  become: true
+  copy:
+    src: /tmp/certs/dkim.key
+    dest: /etc/dkimkeys/dkim.key
+    owner: opendkim
+    group: root
+    mode: 0600
+  tags:
+    - smtp-server
+  notify: restart opendkim
+
+- name: configure opendkim
+  become: true
+  template:
+    src: opendkim.conf.j2
+    dest: /etc/opendkim.conf
+  tags:
+    - smtp-server
+  notify: restart opendkim
+...
