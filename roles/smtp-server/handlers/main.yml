@@ -1,0 +1,9 @@
+---
+- name: restart postfix
+  become: true
+  service: name=postfix state=restarted
+
+- name: restart opendkim
+  become: true
+  service: name=opendkim state=restarted
+...

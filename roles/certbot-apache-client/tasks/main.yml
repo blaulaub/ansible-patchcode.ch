@@ -30,7 +30,7 @@
     - certbot
     - always-changing
 
-- name: make a local certbot certificate folder
+- name: make a local certificate folder
   file:
     path: "/tmp/certs"
     state: directory

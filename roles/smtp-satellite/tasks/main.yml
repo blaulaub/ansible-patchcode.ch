@@ -6,7 +6,7 @@
   tags:
     - smtp-satellite
 
-- name: adjust postfix installation settings
+- name: adjust postfix installation settings (client)
   debconf:
     name: "{{ item.name }}"
     question: "{{ item.question }}"
@@ -19,7 +19,7 @@
   tags:
     - smtp-satellite
 
-- name: enable postfix
+- name: enable postfix (client)
   package:
     name: postfix
     state: present

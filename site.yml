@@ -62,6 +62,12 @@
   roles:
     - certbot-apache-client
 
+#  I have some smtp servers
+
+- hosts: smtp_servers
+  roles:
+    - smtp-server
+
 #  I have some smtp satellite systems
 
 - hosts: smtp_satellites
