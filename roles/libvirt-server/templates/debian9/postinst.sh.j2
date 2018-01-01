@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Install/Overwrite ssh host keys
+cd /etc/ssh
+tar xfz /tmp/hostkeys.tar.gz
+rm /tmp/hostkeys.tar.gz
+
 # Install SSH key for ansible agent
 mkdir -m700 /home/{{ ansible_ssh_user }}/.ssh
 mv /tmp/authorized_keys /home/{{ ansible_ssh_user }}/.ssh/authorized_keys

@@ -7,17 +7,29 @@
   with_items:
     - "{{ vm_definitions_presence.results | json_query('[?skipped].item.os_variant') | unique }}"
 
+- name: prepare resource root folder
+  file:
+    path: "/tmp/virsh-resource"
+    state: directory
+    mode: 0700
+
+- name: prepare resource folders
+  file:
+    path: "/tmp/virsh-resource/{{ item }}"
+    state: directory
+    mode: 0700
+  with_items:
+    - "{{ vm_definitions_presence.results | json_query('[?skipped].item.os_variant') | unique }}"
+
 - name: prepare missing installation resources (templates)
   vars:
-    templates:
-      - src: postinst.sh.j2
-        dst: postinst.sh
-      - src: preseed.cfg.j2
-        dst: preseed.cfg
-  template: src="{{ item[0] }}/{{ item[1].src }}" dest="/tmp/{{ item[0] }}/{{ item[1].dst }}"
+    files:
+      - postinst.sh
+      - preseed.cfg
+  template: src="{{ item[0] }}/{{ item[1] }}.j2" dest="/tmp/virsh-resource/{{ item[0] }}/{{ item[1] }}"
   with_nested:
     - "{{ vm_definitions_presence.results | json_query('[?skipped].item.os_variant') | unique }}"
-    - "{{ templates }}"
+    - "{{ files }}"
 
 - name: prepare missing debian9 installation resources (copies)
   vars:
@@ -25,10 +37,36 @@
       # TODO the following should be configurable
       - src: /home/cfuchs/.ssh/id_rsa.pub
         dst: authorized_keys
-  copy: src="{{ item[1].src }}" dest="/tmp/{{ item[0] }}/{{ item[1].dst }}"
+  copy: src="{{ item[1].src }}" dest="/tmp/virsh-resource/{{ item[0] }}/{{ item[1].dst }}"
   with_nested:
     - "{{ vm_definitions_presence.results | json_query('[?skipped].item.os_variant') | unique }}"
     - "{{ files }}"
+
+# TODO pre-generate host ssh keys, so public keys can be registered locally (for convenience)
+
+- name: prepare folder for ssh host keys
+  file:
+    path: "/tmp/virsh-resource/{{ item.vm_name }}_keys"
+    state: directory
+    mode: 0700
+  with_items:
+    - "{{ vm_definitions_presence.results | json_query('[?skipped].item') }}"
+
+- name: compute ssh host keys for missing VMs
+  command: "ssh-keygen -f '/tmp/virsh-resource/{{ item[0].vm_name }}_keys/ssh_host_{{ item[1] }}_key' -N '' -t {{ item[1] }}"
+  args:
+    chdir:   "/tmp/virsh-resource/{{ item[0].vm_name }}_keys"
+    creates: "/tmp/virsh-resource/{{ item[0].vm_name }}_keys/ssh_host_{{ item[1] }}_key*"
+  with_nested:
+    - "{{ vm_definitions_presence.results | json_query('[?skipped].item') }}"
+    - [ "rsa", "ecdsa", "ed25519" ]
+
+- name: prepare archive with ssh host keys for missing VMs
+  command: "tar cfz hostkeys.tar.gz ssh_host_ecdsa_key  ssh_host_ecdsa_key.pub  ssh_host_ed25519_key  ssh_host_ed25519_key.pub  ssh_host_rsa_key  ssh_host_rsa_key.pub"
+  args:
+    chdir: "/tmp/virsh-resource/{{ item.vm_name }}_keys"
+  with_items:
+    - "{{ vm_definitions_presence.results | json_query('[?skipped].item') }}"
 
 - name: create missing debian9 vms
   # TODO get rid of the literal localnet7 below
@@ -39,9 +77,10 @@
            --vcpus="{{ item.vcpus }}"
            --cpu qemu64,-svm
            -l "{{ installer_location[item.os_variant] }}"
-           --initrd-inject="/tmp/{{ item.os_variant }}/preseed.cfg"
-           --initrd-inject="/tmp/{{ item.os_variant }}/postinst.sh"
-           --initrd-inject="/tmp/{{ item.os_variant }}/authorized_keys"
+           --initrd-inject="/tmp/virsh-resource/{{ item.os_variant }}/preseed.cfg"
+           --initrd-inject="/tmp/virsh-resource/{{ item.os_variant }}/postinst.sh"
+           --initrd-inject="/tmp/virsh-resource/{{ item.os_variant }}/authorized_keys"
+           --initrd-inject="/tmp/virsh-resource/{{ item.vm_name }}_keys/hostkeys.tar.gz"
            --disk vol="{{ item.volumes[0].pool }}/{{ item.volumes[0].name }},bus=virtio"
            -w network=localnet7,mac="{{ item.mac }}",model=virtio
            --os-type "{{ item.os_type }}"
