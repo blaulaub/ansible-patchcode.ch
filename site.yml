@@ -5,10 +5,15 @@
 #
 #   for my home network with ~2 physical servers and ~8 qemu-kvm machines
 
-
 #  I want some maintenance for my Debian systems:
 
-- hosts: debian9
+- hosts: all
+  tasks:
+     - name: Group by distribution and release
+       group_by:
+         key: os_{{ ansible_distribution }}_{{ ansible_distribution_release }}
+
+- hosts: os_Debian_stretch
   become: true
   roles:
     - debian-9-system
