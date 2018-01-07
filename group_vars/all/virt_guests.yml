@@ -27,6 +27,7 @@ virt_host_guests:
 
   wollishofen_patchcode_ch:
     - vm_mysql
+    - vm_wiki
     - vm_another_test
 
 
@@ -63,6 +64,23 @@ virt_guests:
       - name: vm-freenet.qcow2
         size_in_MB: 2048
         pool: qcow
+
+  vm_wiki:
+    vm_name: vm-wiki
+    hostname: wiki
+    network_label: patchcode_ch
+    ram_in_MB: 1024
+    vcpus: 1
+    os_type: linux
+    os_variant: debian9
+    mac: 52:54:00:c4:3c:f1
+    volumes:
+      - name: vm-wiki.qcow2
+        size_in_MB: 2048
+        pool: qcow
+      - name: vm-wiki-swap.qcow2
+        size_in_MB: 512
+        pool: qcow-transient
 
   vm_another_test:
     vm_name: vm-another-test
