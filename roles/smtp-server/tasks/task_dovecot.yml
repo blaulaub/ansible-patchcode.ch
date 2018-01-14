@@ -1,3 +1,11 @@
 ---
+- name: enable postfix (server)
+  become: true
+  package:
+    name: dovecot-imapd
+    state: present
+  tags:
+    - smtp-server
+
 # TODO setup/configure dovecot (or similar)
 ...
