@@ -78,19 +78,6 @@ nfs_exports:
           - dovecot.patchcode.ch
         ro_clients: []
 
-      - path: /share/vm-tomcat
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
-      - path: /share/vm-tomcat/home
-        rw_clients:
-          - tomcat.patchcode.ch
-        ro_clients: []
-      - path: /share/vm-tomcat/var
-        rw_clients:
-          - tomcat.patchcode.ch
-        ro_clients: []
-
       - path: /share/vm-influx
         rw_clients: []
         ro_clients:
