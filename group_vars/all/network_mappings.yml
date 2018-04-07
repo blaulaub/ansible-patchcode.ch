@@ -57,6 +57,9 @@ network_mappings:
       - host: wiki
         ip: 192.168.7.123
         mac: 52:54:00:c4:3c:f1
+      - host: monitor
+        ip: 192.168.7.124
+        mac: 70:85:c2:50:31:9e
       - host: C475P
         ip: 192.168.7.152
         mac: 00:01:E3:79:EA:87

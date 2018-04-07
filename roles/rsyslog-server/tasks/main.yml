@@ -1,0 +1,25 @@
+---
+
+- name: have rsyslog installed
+  package:
+    name: rsyslog
+    state: present
+
+- name: let rsyslog listen for UDP and TCP
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    regexp: "{{ item.pattern }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { pattern: '^#?module\(load="imudp"\)',           line: 'module(load="imudp")' }
+    - { pattern: '^#?input\(type="imudp" port="514"\)', line: 'input(type="imudp" port="514")' }
+    - { pattern: '^#?module\(load="imtcp"\)',           line: 'module(load="imtcp")' }
+    - { pattern: '^#?input\(type="imtcp" port="514"\)', line: 'input(type="imtcp" port="514")' }
+  notify: restart rsyslog
+
+- name: have rsyslog running
+  service:
+    name: rsyslog
+    enabled: yes
+    state: started
+...

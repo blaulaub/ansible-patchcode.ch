@@ -46,6 +46,13 @@
   roles:
     - unbound-server
 
+#  I have some central logging
+
+- hosts: monitor_servers
+  become: true
+  roles:
+    - rsyslog-server
+
 #  I have a number of headless virtual machines
 
 - hosts: headless_vms
