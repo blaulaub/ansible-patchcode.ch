@@ -1,5 +1,4 @@
 ---
-
 - name: have rsyslog installed
   package:
     name: rsyslog

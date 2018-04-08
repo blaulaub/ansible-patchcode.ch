@@ -53,6 +53,13 @@
   roles:
     - rsyslog-server
 
+#  I have some nodes that use central logging
+
+- hosts: monitor_clients
+  become: true
+  roles:
+    - rsyslog-client
+
 #  I have a number of headless virtual machines
 
 - hosts: headless_vms

@@ -1,0 +1,23 @@
+---
+- name: have rsyslog installed
+  package:
+    name: rsyslog
+    state: present
+
+- name: forward operational messages to monitor
+  blockinfile:
+    dest: /etc/rsyslog.conf
+    block: |
+      *.info  action(type="omfwd" target="monitor.patchcode.ch" port="514" protocol="tcp"
+                     action.resumeRetryCount="100"
+                     queue.type="linkedList" queue.size="10000")
+  notify: restart rsyslog
+
+# TODO also config grup boot param to forward kernel messages
+
+- name: have rsyslog running
+  service:
+    name: rsyslog
+    enabled: yes
+    state: started
+...
