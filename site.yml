@@ -46,6 +46,13 @@
   roles:
     - unbound-server
 
+#  I have some physical machines
+
+- hosts: physical_machines
+  become: true
+  roles:
+    - physical-machine
+
 #  I have some central logging
 
 - hosts: monitor_servers

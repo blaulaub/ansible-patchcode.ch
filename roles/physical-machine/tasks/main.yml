@@ -1,0 +1,13 @@
+---
+- name: have smartmontools installed
+  package:
+    name: smartmontools
+    state: present
+
+
+- name: have smartd running
+  service:
+    name: smartd
+    enabled: yes
+    state: started
+...
