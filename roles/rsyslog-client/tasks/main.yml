@@ -13,8 +13,6 @@
                      queue.type="linkedList" queue.size="10000")
   notify: restart rsyslog
 
-# TODO also config grup boot param to forward kernel messages
-
 - name: have rsyslog running
   service:
     name: rsyslog
