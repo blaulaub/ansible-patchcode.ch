@@ -53,6 +53,13 @@
   roles:
     - physical-machine
 
+#  I have some apache2 servers
+
+- hosts: apache2_servers
+  become: true
+  roles:
+    - apache2-server
+
 #  I have some central logging
 
 - hosts: monitor_servers
@@ -74,13 +81,6 @@
   roles:
     - ttyS0-server
     - powerbutton-listener
-
-#  I have some apache 2 servers
-
-- hosts: apache2_servers
-  become: true
-  roles:
-    - apache2-server
 
 #  I have one(?) certbot client
 

@@ -116,4 +116,11 @@ nfs_exports:
           - LoungePC.patchcode.ch
         ro_clients:
           - litserv.patchcode.ch
+
+      - path: /share/lea
+        rw_clients:
+          - LoungePC.patchcode.ch
+        ro_clients:
+          - litserv.patchcode.ch
+
 ...

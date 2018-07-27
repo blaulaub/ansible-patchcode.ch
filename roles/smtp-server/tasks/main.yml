@@ -1,5 +1,5 @@
 ---
-- include: task_opendkim.yml
+#- include: task_opendkim.yml
 - include: task_postfix.yml
 - include: task_dovecot.yml
 ...
