@@ -1,4 +1,4 @@
 ---
 dependencies:
-- { role: apache2-server }
+- { role: apache2-private }
 ...

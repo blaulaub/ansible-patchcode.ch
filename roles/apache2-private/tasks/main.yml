@@ -1,0 +1,23 @@
+---
+- name: make certificate folder
+  become: true
+  file:
+    path: "/etc/apache2-private-certs"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: 0700
+
+- name: deploy certificates
+  become: true
+  copy:
+    src: "/tmp/certs/www.patchcode.ch/etc/letsencrypt/live/patchcode.ch/{{ item }}"
+    dest: "/etc/apache2-private-certs/{{ item }}"
+    owner: www-data
+    group: www-data
+    mode: 0600
+  with_items:
+    - fullchain.pem
+    - privkey.pem
+  notify: restart apache
+...
