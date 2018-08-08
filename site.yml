@@ -74,12 +74,12 @@
   roles:
     - rsyslog-client
 
-#  I have some SQL servers
+#  I have PhpMyAdmin (with local SQL server)
 
-- hosts: sql_servers
+- hosts: sql_webfront
   become: true
   roles:
-    - sql-server
+    - sql-webfront
 
 #  I have a number of headless virtual machines
 

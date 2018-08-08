@@ -1,0 +1,7 @@
+---
+
+- name: have PhpMyAdmin installed
+  package:
+    name: phpmyadmin
+    state: present
+...

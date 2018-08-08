@@ -1,4 +1,5 @@
 ---
 dependencies:
 - { role: apache2-private }
+- { role: sql-server }
 ...
