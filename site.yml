@@ -74,6 +74,13 @@
   roles:
     - rsyslog-client
 
+#  I have some SQL servers
+
+- hosts: sql_servers
+  become: true
+  roles:
+    - sql-server
+
 #  I have a number of headless virtual machines
 
 - hosts: headless_vms

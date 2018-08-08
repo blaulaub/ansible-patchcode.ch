@@ -1,0 +1,13 @@
+---
+
+- name: have MySQL installed
+  package:
+    name: mysql-server
+    state: present
+
+- name: have MySQL service running
+  service:
+    name: mysql
+    enabled: yes
+    state: started
+...
