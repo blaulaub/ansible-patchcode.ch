@@ -78,19 +78,6 @@ nfs_exports:
           - dovecot.patchcode.ch
         ro_clients: []
 
-      - path: /share/vm-influx
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
-      - path: /share/vm-influx/home
-        rw_clients:
-          - influx.patchcode.ch
-        ro_clients: []
-      - path: /share/vm-influx/var
-        rw_clients:
-          - influx.patchcode.ch
-        ro_clients: []
-
       - path: /share/freenet
         rw_clients:
           - freenet.patchcode.ch
