@@ -26,6 +26,9 @@ COMMIT
 -A INPUT -i {{ lan_nic }} -j ACCEPT
 -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 -A INPUT -i {{ wan_nic }} -j DROP
+{% for ip_address in ip_blacklist %}
+-A FORWARD -i {{ wan_nic }} -s {{ ip_address }} -j DROP
+{% endfor %}
 {% for item in network_routes[this_host_label].forwards %}
 {% for port in item.ports %}
 {% for proto in item.protos %}
