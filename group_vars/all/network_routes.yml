@@ -21,7 +21,8 @@ network_routes:
         destination: 192.168.7.101
 
       - ports:
-          - 25
+          - 25    # smtp
+          - 993   # imap over ssl
         protos:
           - tcp
         destination: 192.168.7.110
