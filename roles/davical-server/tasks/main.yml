@@ -1,0 +1,7 @@
+---
+- name: enable davical (server)
+  become: true
+  package:
+    name: davical
+    state: present
+...

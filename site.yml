@@ -107,4 +107,12 @@
   become: true
   roles:
     - smtp-satellite
+
+#  I have a public davical server
+
+- hosts: davical_servers
+  become: true
+  roles:
+    - davical-server
+
 ...

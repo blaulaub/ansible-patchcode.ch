@@ -19,5 +19,7 @@
   with_items:
     - fullchain.pem
     - privkey.pem
+  tags:
+    - certbot
   notify: restart apache
 ...

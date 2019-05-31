@@ -52,6 +52,7 @@
     - privkey.pem
   tags:
     - smtp-server
+    - certbot
   notify: restart postfix
 
 - name: configure postfix

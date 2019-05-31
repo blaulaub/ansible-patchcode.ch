@@ -33,4 +33,10 @@ network_routes:
         protos:
           - tcp
         destination: 192.168.7.116
+
+      - ports:
+          - 7352
+        protos:
+          - tcp
+        destination: 192.168.7.110
 ...
