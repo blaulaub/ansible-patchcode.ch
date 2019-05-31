@@ -83,12 +83,6 @@ nfs_exports:
           - freenet.patchcode.ch
         ro_clients: []
 
-      - path: /share/mysql_var_lib_mysql
-        rw_clients:
-          - mysql.patchcode.ch
-        ro_clients:
-          - litserv.patchcode.ch
-
   - heading: "user shares"
     paths:
 
