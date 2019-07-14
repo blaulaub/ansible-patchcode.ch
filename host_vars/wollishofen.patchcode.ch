@@ -12,71 +12,17 @@ nfs_exports:
         rw_clients:
           - white-dwarf.patchcode.ch
           - LoungePC.patchcode.ch
-        ro_clients:
-          - litserv.patchcode.ch
+        ro_clients: []
 
   - heading: "the diskless-debian-LoungePC, plus the backup machine"
     paths:
       - path: /share/lounge-root-debian
         rw_clients:
           - LoungePC.patchcode.ch
-        ro_clients:
-          - litserv.patchcode.ch
-
-  - heading: "media is shared through samba, only the backup machine needs access"
-    paths:
-      - path: /share/movies
-        rw_clients: []
-        ro_clients:
-            - litserv.patchcode.ch
-      - path: /share/music
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
-      - path: /share/fotos
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
-      - path: /share/pdf
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
-      - path: /share/docuScans
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
-      - path: /share/Public
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
-      - path: /share/repositories
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
-
-  - heading: "other stuff"
-    paths:
-      - path: /share/old
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
+        ro_clients: []
 
   - heading: "service and machine shares"
     paths:
-
-      - path: /share/aptcache
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
-
-      - path: /share/vm-dovecot
-        rw_clients: []
-        ro_clients:
-          - litserv.patchcode.ch
-      - path: /share/vm-dovecot/var
-        rw_clients:
-          - dovecot.patchcode.ch
-        ro_clients: []
 
       - path: /share/freenet
         rw_clients:
