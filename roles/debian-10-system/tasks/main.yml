@@ -1,0 +1,9 @@
+---
+# TODO ensure domain is set
+
+- include: task_configure_etc_hosts.yml
+- include: task_create_users.yml
+- include: task_install_aptitude.yml
+- include: task_configure_source.yml
+- include: task_update_cycle.yml
+...

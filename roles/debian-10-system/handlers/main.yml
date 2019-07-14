@@ -1,0 +1,7 @@
+---
+- name: clean package download cache
+  command: apt-get clean
+
+- name: remove unused packages
+  command: apt-get autoremove -y
+...

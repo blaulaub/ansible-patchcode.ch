@@ -18,6 +18,11 @@
   roles:
     - debian-9-system
 
+- hosts: os_Debian_buster
+  become: true
+  roles:
+    - debian-10-system
+
 #  I use dnsmasq for DHCP, TFTP and DNS:
 
 - hosts: dnsmasq_servers

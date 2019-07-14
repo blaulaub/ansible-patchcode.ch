@@ -1,0 +1,38 @@
+---
+- name: select users for this host
+  set_fact: present=yes
+  when: item.key in this_host_users
+  with_dict: "{{ active_users }}"
+  register: this_host_active_users
+  tags: user_accounts
+
+- name: create user groups for active users
+  group:
+    name: "{{ active_users[item].name}}"
+    gid: "{{active_users[item].gid}}"
+    state: present
+  with_items:
+    - "{{ this_host_users }}"
+  tags: user_accounts
+
+- name: create active users
+  user:
+    name: "{{ active_users[item].name}}"
+    group: "{{ active_users[item].name}}"
+    uid: "{{active_users[item].uid}}"
+    shell: "/bin/bash"
+    state: present
+  with_items:
+    - "{{ this_host_users }}"
+  tags: user_accounts
+
+- name: deploy public ssh keys for active users
+  authorized_key:
+    user: "{{ item.0.name }}"
+    key: "{{ item.1 }}"
+    state: present
+  with_subelements:
+    - "{{ this_host_active_users.results | json_query('[?ansible_facts.present].item.value') }}"
+    - public_ssh_keys
+  tags: user_accounts
+...
