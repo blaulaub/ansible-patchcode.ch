@@ -60,6 +60,9 @@ network_mappings:
       - host: monitor
         ip: 192.168.7.124
         mac: 70:85:c2:50:31:9e
+      - host: ortstock
+        ip: 192.168.7.125
+        mac: 18:03:73:c0:c0:3d
       - host: C475P
         ip: 192.168.7.152
         mac: 00:01:E3:79:EA:87
