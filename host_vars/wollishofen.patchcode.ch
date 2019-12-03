@@ -14,11 +14,18 @@ nfs_exports:
           - LoungePC.patchcode.ch
         ro_clients: []
 
-  - heading: "the diskless-debian-LoungePC, plus the backup machine"
+  - heading: "the diskless-debian-LoungePC"
     paths:
       - path: /share/lounge-root-debian
         rw_clients:
           - LoungePC.patchcode.ch
+        ro_clients: []
+
+  - heading: "the diskless-debian-tokio"
+    paths:
+      - path: /share/tokio-root-debian
+        rw_clients:
+          - Tokio.patchcode.ch
         ro_clients: []
 
   - heading: "service and machine shares"
@@ -35,18 +42,21 @@ nfs_exports:
       - path: /share/cfuchs
         rw_clients:
           - LoungePC.patchcode.ch
+          - Tokio.patchcode.ch
         ro_clients:
           - litserv.patchcode.ch
 
       - path: /share/diana
         rw_clients:
           - LoungePC.patchcode.ch
+          - Tokio.patchcode.ch
         ro_clients:
           - litserv.patchcode.ch
 
       - path: /share/lea
         rw_clients:
           - LoungePC.patchcode.ch
+          - Tokio.patchcode.ch
         ro_clients:
           - litserv.patchcode.ch
 

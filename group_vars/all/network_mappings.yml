@@ -63,6 +63,9 @@ network_mappings:
       - host: ortstock
         ip: 192.168.7.125
         mac: 18:03:73:c0:c0:3d
+      - host: influx01
+        ip: 192.168.7.126
+        mac: 52:54:00:7c:14:83
       - host: C475P
         ip: 192.168.7.152
         mac: 00:01:E3:79:EA:87
