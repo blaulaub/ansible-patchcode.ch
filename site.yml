@@ -120,4 +120,11 @@
   roles:
     - davical-server
 
+# I have influx servers
+
+- hosts: influxservers
+  become: true
+  roles:
+    - influx-server
+
 ...

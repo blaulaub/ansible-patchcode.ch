@@ -1,0 +1,16 @@
+---
+
+- name: have InfluxDB installed
+  package:
+    name: influxdb
+    state: present
+  notify: restart influxdb
+
+- name: have InfluxDB service running
+  service:
+    name: influxdb
+    enabled: yes
+    state: started
+
+...
+
