@@ -10,10 +10,9 @@ Playbooks are executed calling `ansible-playbook <playbook.yml>`, possibly
 with further options to select or restrict hosts or tags. Following playbooks
 are included:
 
-| playbook          | meaning                                           |
-| ----------------- | ------------------------------------------------- |
-| debian-system.yml | Invokes tasks for the roles `debian-9-system` and |
-| ^                 | `debian-10-system`-                               |
+| playbook          | meaning                                                              |
+| ----------------- | -------------------------------------------------------------------- |
+| debian-system.yml | Invokes tasks for the roles `debian-9-system` and `debian-10-system` |
 
 
 # Roles
